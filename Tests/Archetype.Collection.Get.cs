@@ -1,5 +1,6 @@
 ﻿using Meep.Tech.XBam.Examples.ModelWithArchetypes;
 using Meep.Tech.XBam.Examples.ModelWithComponents;
+using Meep.Tech.XBam.Examples.StructOnlyModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Meep.Tech.XBam.Tests {
@@ -15,7 +16,7 @@ namespace Meep.Tech.XBam.Tests {
 
         [TestMethod]
         public void StaticFromChildArchetype_Exists() {
-          Assert.IsNotNull(Archetypes.GetCollectionFor(Archetypes<Apple>._));
+          Assert.IsNotNull(Archetypes.GetCollection(Archetypes<Apple>._));
         }
 
         [TestMethod]
@@ -43,6 +44,11 @@ namespace Meep.Tech.XBam.Tests {
         [TestMethod]
         public void DefaultTypesCollectionForBaModel_Exists() {
           Assert.IsNotNull(Item.Types);
+        }
+
+        [TestMethod]
+        public void DefaultTypesCollectionForInterfaceModels_Exists() {
+          Assert.IsNotNull(Models.FromInterface<Tile>.Types);
         }
       }
     }

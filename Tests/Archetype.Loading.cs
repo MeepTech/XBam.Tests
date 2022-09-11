@@ -14,7 +14,7 @@ namespace Meep.Tech.XBam.Tests {
 
       [AssemblyInitialize]
       public static void Initialize(TestContext _) {
-        Loader.Settings settings = new Loader.Settings() {
+        Loader.Settings settings = new() {
           UniverseName = "Meep.Tech.ECSBAM.Tests",
           PreLoadAssemblies = new() {
             typeof(Meep.Tech.XBam.Examples.ModelWithArchetypes.Apple).Assembly

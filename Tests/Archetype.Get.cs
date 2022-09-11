@@ -27,16 +27,20 @@ namespace Meep.Tech.XBam.Tests {
         );
       }
 
-      // TOOD: builder stuff should be under Model.Builder
+      [TestMethod]
       public void GetFromSystemType_Success() {
         Assert.AreEqual(Apple.Id.Archetype, typeof(Apple).AsArchetype());
         Assert.AreEqual(Sword.Id.Archetype, typeof(Sword).AsArchetype());
       }
 
-      public void GetFromSystemTypeGenerics_Success() {
-        Assert.AreEqual(Apple.Id.Archetype, typeof(Apple).AsArchetype<Item.Type>());
-        Assert.AreEqual(Apple.Id.Archetype, typeof(Sword).AsArchetype<Sword>());
+      [TestMethod]
+      public void GetFromSystemTypeGenerics_Child_Success() {
         Assert.AreEqual(Apple.Id.Archetype, typeof(Apple).AsArchetype<Apple>());
+      }
+
+      [TestMethod]
+      public void GetFromSystemTypeGenerics_Parent_Success() {
+        Assert.AreEqual(Apple.Id.Archetype, typeof(Apple).AsArchetype<Item.Type>());
       }
     }
   }

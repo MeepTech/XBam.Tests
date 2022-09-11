@@ -1,7 +1,11 @@
 ﻿using Meep.Tech.XBam.Examples.ModelWithArchetypes;
 using Meep.Tech.XBam.Examples.ModelWithComponents;
+using Meep.Tech.XBam.Json;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.Generic;
 
 namespace Meep.Tech.XBam.Tests {
   public partial class Model {
@@ -13,7 +17,7 @@ namespace Meep.Tech.XBam.Tests {
         Item item = Item.Types.Get<Sword>().Make<Weapon>();
         JObject itemJson = item.ToJson();
 
-        Item deserializedItem = (Item)IModel.FromJson(itemJson);
+        Item deserializedItem = (Item)Deserialize.ToModel(itemJson);
 
         Assert.AreEqual(((IUnique)item).Id, ((IUnique)deserializedItem).Id);
       }
@@ -27,33 +31,33 @@ namespace Meep.Tech.XBam.Tests {
       }
 
       [TestMethod]
+      public void SerializeSimpleItemDeserialization_Success() {
+        Item item = Item.Types.Get<Sword>().Make<Weapon>();
+        JObject itemJson = item.ToJson();
+
+        Item deserializedItem = Archetypes<Sword>.Instance.MakeFromJson(itemJson);
+
+        Assert.AreEqual(item, deserializedItem);
+      }
+
+      [TestMethod]
       public void SerializedUniqueIdDeserialization_Success() {
         Item item = Item.Types.Get<Sword>().Make<Weapon>();
         JObject itemJson = item.ToJson();
 
-        Item deserializedItem = (Item)IModel.FromJson(itemJson);
+        Item deserializedItem = Archetypes<Sword>.Instance.MakeFromJson(itemJson);
 
         Assert.AreEqual(((IUnique)item).Id, ((IUnique)deserializedItem).Id);
       }
 
       [TestMethod]
-      public void SerializeSimpleItemDeserialization_Success() {
+      public void SerializeSimpleItemDeserializationFromAbstractBaseGeneric_Failure() {
         Item item = Item.Types.Get<Sword>().Make<Weapon>();
         JObject itemJson = item.ToJson();
 
-        Item deserializedItem = (Item)IModel.FromJson(itemJson);
-
-        Assert.AreEqual(item, deserializedItem);
-      }
-
-      [TestMethod]
-      public void SerializeSimpleItemDeserializationBaseGeneric_Success() {
-        Item item = Item.Types.Get<Sword>().Make<Weapon>();
-        JObject itemJson = item.ToJson();
-
-        Item deserializedItem = IModel<Item>.FromJson(itemJson);
-
-        Assert.AreEqual(item, deserializedItem);
+        Assert.ThrowsException<KeyNotFoundException>(() => {
+          Archetypes<Item.Type>.Instance.MakeFromJson(itemJson);
+        });
       }
 
       [TestMethod]
@@ -61,19 +65,19 @@ namespace Meep.Tech.XBam.Tests {
         Item item = Item.Types.Get<Sword>().Make<Weapon>();
         JObject itemJson = item.ToJson();
 
-        Item deserializedItem = Item.FromJson(itemJson);
+        Item deserializedItem = Deserialize.ToModel<Item>(itemJson);
 
         Assert.AreEqual(item, deserializedItem);
       }
 
       [TestMethod]
-      public void SerializeSimpleItemDeserializationGenericConvert_Success() {
+      public void SerializeSimpleItemDeserializationGenericConvert_ParentCannotHandleChildDeserialization_Failure() {
         Item item = Item.Types.Get<Sword>().Make<Weapon>();
         JObject itemJson = item.ToJson();
 
-        Item deserializedItem = Item.FromJsonAs<Weapon>(itemJson);
-
-        Assert.AreEqual(item, deserializedItem);
+        Assert.ThrowsException<JsonException>(() => {
+          Deserialize.ToModel<Item>(itemJson, typeof(Item));
+        });
       }
 
       [TestMethod]
@@ -81,7 +85,7 @@ namespace Meep.Tech.XBam.Tests {
         Item item = Item.Types.Get<Sword>().Make<Weapon>();
         JObject itemJson = item.ToJson();
 
-        Item deserializedItem = Item.FromJsonAs<Weapon>(itemJson, typeof(Weapon));
+        Item deserializedItem = (Item)Deserialize.ToModel(itemJson, typeof(Weapon));
 
         Assert.AreEqual(item, deserializedItem);
       }
@@ -91,7 +95,7 @@ namespace Meep.Tech.XBam.Tests {
         Item item = Item.Types.Get<Sword>().Make<Weapon>();
         JObject itemJson = item.ToJson();
 
-        Item deserializedItem = (Item)IModel.FromJson(itemJson);
+        Item deserializedItem = Deserialize.ToModel<Item>(itemJson);
 
         Assert.AreEqual(item.ToJson().ToString(), deserializedItem.ToJson().ToString());
       }
@@ -107,7 +111,7 @@ namespace Meep.Tech.XBam.Tests {
 
         JObject itemJson = device.ToJson();
 
-        Device deserializedItem = (Device)IModel.FromJson(itemJson);
+        Device deserializedItem = (Device)Deserialize.ToModel(itemJson);
 
         Assert.AreEqual(device.ToJson().ToString(), deserializedItem.ToJson().ToString());
       }

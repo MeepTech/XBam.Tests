@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.1;net5;net6</TargetFrameworks>
+    <TargetFrameworks>net5</TargetFrameworks>
 	  <LangVersion>10</LangVersion>
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
@@ -19,8 +19,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Meep.Tech.Data.Examples\Meep.Tech.Data.Examples.csproj" />
-    <ProjectReference Include="..\Meep.Tech.Data\Meep.Tech.Xbam.csproj" />
+    <ProjectReference Include="..\..\Examples\Meep.Tech.XBam.Examples.csproj" />
+    <ProjectReference Include="..\..\_\Meep.Tech.Xbam.csproj" />
   </ItemGroup>
 
 </Project>

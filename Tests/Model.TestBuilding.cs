@@ -11,7 +11,7 @@ namespace Meep.Tech.XBam.Tests {
 			[TestMethod]
 			public void SetTestValue_Int_Success() {
         Candy candy =
-          Meep.Tech.XBam.Configuration.Loader.GetOrBuildTestModel(
+          Universe.Default.Loader.GetOrBuildTestModel(
               Candy.Types.Get<ChocolateBar>(),
               typeof(Candy)
           ) as Candy;
@@ -21,7 +21,7 @@ namespace Meep.Tech.XBam.Tests {
       [TestMethod]
       public void SetTestValue_Int_WithName_Success() {
         Gumdrops candy =
-          Meep.Tech.XBam.Configuration.Loader.GetOrBuildTestModel(
+          Universe.Default.Loader.GetOrBuildTestModel(
               Candy.Types.Get<Gumdrops.Type>(),
               typeof(Candy)
           ) as Gumdrops;
@@ -31,7 +31,7 @@ namespace Meep.Tech.XBam.Tests {
       [TestMethod]
       public void SetTestValue_EmptyEnumeration_Success() {
         Candy candy =
-          Meep.Tech.XBam.Configuration.Loader.GetOrBuildTestModel(
+          Universe.Default.Loader.GetOrBuildTestModel(
               Candy.Types.Get<ChocolateBar>(),
               typeof(Candy)
           ) as Candy;
@@ -41,7 +41,7 @@ namespace Meep.Tech.XBam.Tests {
       [TestMethod]
       public void SetTestValue_NewDictionary_Success() {
         Candy candy =
-          Meep.Tech.XBam.Configuration.Loader.GetOrBuildTestModel(
+          Universe.Default.Loader.GetOrBuildTestModel(
               Candy.Types.Get<ChocolateBar>(),
               typeof(Candy)
           ) as Candy;
@@ -52,7 +52,7 @@ namespace Meep.Tech.XBam.Tests {
       [TestMethod]
       public void SetTestValue_FromMemberField_Success() {
         Candy candy =
-          Meep.Tech.XBam.Configuration.Loader.GetOrBuildTestModel(
+          Universe.Default.Loader.GetOrBuildTestModel(
               Candy.Types.Get<ChocolateBar>(),
               typeof(Candy)
           ) as Candy;
@@ -62,7 +62,7 @@ namespace Meep.Tech.XBam.Tests {
       [TestMethod]
       public void SetTestValue_FromMemberProperty_Success() {
         Candy candy =
-          Meep.Tech.XBam.Configuration.Loader.GetOrBuildTestModel(
+          Universe.Default.Loader.GetOrBuildTestModel(
               Candy.Types.Get<ChocolateBar>(),
               typeof(Candy)
           ) as Candy;
@@ -72,7 +72,7 @@ namespace Meep.Tech.XBam.Tests {
       [TestMethod]
       public void SetTestValue_FromMemberMethod_Success() {
         Candy candy =
-          Meep.Tech.XBam.Configuration.Loader.GetOrBuildTestModel(
+          Universe.Default.Loader.GetOrBuildTestModel(
               Candy.Types.Get<ChocolateBar>(),
               typeof(Candy)
           ) as Candy;
@@ -82,7 +82,7 @@ namespace Meep.Tech.XBam.Tests {
       [TestMethod]
       public void SetTestValue_FromMemberMethodWithArgs_Success() {
         Candy candy =
-          Meep.Tech.XBam.Configuration.Loader.GetOrBuildTestModel(
+          Universe.Default.Loader.GetOrBuildTestModel(
               Candy.Types.Get<ChocolateBar>(),
               typeof(Candy)
           ) as Candy;
@@ -92,7 +92,7 @@ namespace Meep.Tech.XBam.Tests {
       [TestMethod]
       public void SetTestValue_string_FromBranchedModelType_Base_Success() {
         Candy candy =
-          Meep.Tech.XBam.Configuration.Loader.GetOrBuildTestModel(
+          Universe.Default.Loader.GetOrBuildTestModel(
               Candy.Types.Get<ChocolateBar>(),
               typeof(Candy)
           ) as Candy;
@@ -102,7 +102,7 @@ namespace Meep.Tech.XBam.Tests {
       [TestMethod]
       public void SetTestValue_string_FromBranchedModelTypeWithBaseModelType_Success() {
         Candy candy =
-          Meep.Tech.XBam.Configuration.Loader.GetOrBuildTestModel(
+          Universe.Default.Loader.GetOrBuildTestModel(
               Candy.Types.Get<Gumdrops.Type>(),
               typeof(Candy)
           ) as Candy;
@@ -110,19 +110,20 @@ namespace Meep.Tech.XBam.Tests {
       }
 
       [TestMethod]
-      public void SetTestValue_string_FromUnBranchedNewModelTypeWithBaseModelType_Success() {
+      public void SetTestValue_string_FromUnBranchedNewModelType_Success() {
         Jellybean candy =
-          Meep.Tech.XBam.Configuration.Loader.GetOrBuildTestModel(
-              Candy.Types.Get<JellybeanType>(),
-              typeof(Candy)
-          ) as Jellybean;
+          (Jellybean)Universe.Default.Loader.GetOrBuildTestModel(
+            Candy.Types.Get<JellybeanType>(),
+            typeof(Jellybean)
+          );
+
         Assert.AreEqual(true, candy.IsShiny);
       }
 
       [TestMethod]
       public void SetTestValue_string_FromBranchedModelType_Success() {
         Candy candy =
-          Meep.Tech.XBam.Configuration.Loader.GetOrBuildTestModel(
+          Universe.Default.Loader.GetOrBuildTestModel(
               Candy.Types.Get<Gumdrops.Type>(),
               typeof(Gumdrops)
           ) as Candy;

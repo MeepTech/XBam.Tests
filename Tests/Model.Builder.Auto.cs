@@ -1,4 +1,5 @@
-﻿using Meep.Tech.XBam.Examples.AutoBuilder;
+﻿using Meep.Tech.XBam.Configuration;
+using Meep.Tech.XBam.Examples.AutoBuilder;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using static Meep.Tech.XBam.Examples.AutoBuilder.Animal;
 
@@ -47,7 +48,7 @@ namespace Meep.Tech.XBam.Tests {
         [TestMethod]
         public void MakeWithAutoBuilderOverrideDefaultField_Snake_NumberOfLegs_Failure() {
           const string snakeName = "Snakey";
-          Assert.ThrowsException<AutoBuildAttribute.Exception>(() =>
+          Assert.ThrowsException<AutoBuilderContext.Exception>(() =>
             Animal.Types.Get<Snake>()
               .Make((nameof(Animal.Name), snakeName), (nameof(Animal.NumberOfLegs), -1)));
         }
@@ -63,7 +64,7 @@ namespace Meep.Tech.XBam.Tests {
 
         [TestMethod]
         public void MakeWithAutoBuilderRequiredFieldMissing_Snake_Name_Failure() {
-          Assert.ThrowsException<AutoBuildAttribute.Exception>(() => 
+          Assert.ThrowsException<AutoBuilderContext.Exception>(() => 
             Animal.Types.Get<Snake>()
               .Make<Animal>());
         }
